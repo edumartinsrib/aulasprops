@@ -12,11 +12,17 @@
       :class="classValor"
       @click="startCount()"
     />
-    <tableData :dados='arrData' />
-     <buttonsTimer
+    <buttonsTimer
+      :textValue="textValor3"
+      :class="classValor3"
+      @click="LimparCampo()"
+    />
+    <tableData :dados="arrData" v-show="secondValue" />
+    <buttonsTimer
       :textValue="textValor2"
       :class="classValor2"
-      @click="saveData"
+      @click="saveData()"
+      v-show="secondValue"
     />
   </div>
 </template>
@@ -39,15 +45,17 @@ export default {
       timer: null,
       textValor: null,
       textValor2: null,
+      textValor3: null,
       classValor: null,
       classValor2: null,
+      classValor3: null,
       hourValue: 0,
       minuteValue: 0,
       secondValue: 0,
       interval: null,
       arrData: [],
       idCont: 0,
-    }
+    };
   },
   methods: {
     startCount() {
@@ -67,22 +75,31 @@ export default {
       }
     },
     counterTime() {
-      this.interval = setInterval(()=> {
-
+      this.interval = setInterval(() => {
         this.secondValue += 1;
-        this.secondValue === 60 ? (this.minuteValue++, this.secondValue = 0) :
-        this.minuteValue === 60 ? this.hourValue++ : '';
-        
-        },1000)
+        this.secondValue === 60
+          ? (this.minuteValue++, (this.secondValue = 0))
+          : "";
+        this.minuteValue === 60 ? this.hourValue++ : "";
+      }, 1000);
     },
 
     StopCounter() {
       clearInterval(this.interval);
-
     },
-    saveData(){
-      this.arrData.push({ id: this.idCont++, valor:`0${this.hourValue}:0${this.minuteValue}:${this.secondValue}`});
-      console.log(this.arrData)
+    saveData() {
+      this.arrData.push({
+        id: this.idCont++,
+        valor: `0${this.hourValue}:0${this.minuteValue}:${this.secondValue}`,
+      });
+      console.log(this.arrData);
+    },
+    LimparCampo() {
+      this.secondValue = 0;
+      this.secondValue = 0;
+      this.minuteValue = 0;
+      this.changeStatus();
+      this.arrData = [];
     },
   },
   created() {
@@ -90,6 +107,8 @@ export default {
     this.classValor = "btnS btn btn-success";
     this.textValor2 = "Registrar";
     this.classValor2 = "btn btn-dark mt-2 ";
+    this.textValor3 = "Limpar";
+    this.classValor3 = "btn btn-dark ";
   },
 };
 </script>
@@ -102,9 +121,8 @@ h2 {
 div.main {
   text-align: center;
 }
-.btn-dark{
-position: relative;
-right: -100px;
-color: aliceblue;
+.btn-dark {
+  color: aliceblue;
+  margin-left: 10px;
 }
 </style>

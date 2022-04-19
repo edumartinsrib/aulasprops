@@ -1,5 +1,5 @@
 <template>
-  <button>{{ textValue }}</button>
+  <button class="buttons">{{ textValue }}</button>
 </template>
 
 <script>
@@ -17,9 +17,8 @@ export default {
 </script>
 
 <style>
-.btnS {
-  
-  margin-bottom: 15px;
-  
+.buttons{
+    display: inline-block;
+margin-bottom: 5px;
 }
 </style>
